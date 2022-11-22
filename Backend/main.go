@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"strings"
 )
@@ -34,6 +35,7 @@ type Mail struct {
 
 func main() {
 	searchForArchives("./enron")
+
 }
 
 func sendToSync(direccion string) {
