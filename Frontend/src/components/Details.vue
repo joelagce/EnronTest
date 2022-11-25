@@ -1,81 +1,83 @@
 <template>
-  
+  <div>
    <div class="result">
     
-    <form class="formContainer__form resultForm" @submit.prevent="searchMessages">
-      <input type="text" class="formContainer__input" v-model="keyword" />
-      <svg
-        width="1.1em"
-        height="1.1em"
-        viewBox="0 0 16 16"
-        class="bi bi-search searchIcon"
-        fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"
-        />
-        <path
-          fill-rule="evenodd"
-          d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"
-        />
+    <form class="md:w-[584px] mx-auto mt-7 flex w-[92%] items-center rounded-full border hover:shadow-md" 
+    @submit.prevent="searchMessages">
+    
+      <div class="pl-5">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
       </svg>
-      <svg
-        width="1.3em"
-        height="1.3em"
-        viewBox="0 0 16 16"
-        class="bi bi-mic microphone"
-        fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"
-        />
-        <path
-          fill-rule="evenodd"
-          d="M10 8V3a2 2 0 1 0-4 0v5a2 2 0 1 0 4 0zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z"
-        />
+    </div>
+	
+    <input type="text" class="w-full bg-transparent rounded-full py-[14px] pl-4 outline-none"  v-model="keyword" />
+    <div class="pr-5">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
       </svg>
+    </div>
     </form>
    
     
     
    </div> 
-   <div class="area">
-   <div class="show">
-    <div class="show__results" v-for="message in messages" :key="message" >
-      <p class="topLink" v-on:click="showMessage(message._source.Message)">{{message._source.Subject}}</p>
-      <p class="link">
-        <a >{{message._source.From}}</a>
-      </p>
-      <p class="description">
-        {{message._source.To}}
-      </p>
-    </div>
-    
-  </div>
   
- 
+    
+    <div className="mx-auto w-full min-h-screen px-3 sm:pl-[5%] md:pl-[14%] lg:pl-52 font-open-sans dark:bg-primary-dark  dark:text-white">
+      <p className="text-gray-600 dark:text-gray-400 text-md mb-3 mt-3">
+        About 365 results
+      </p>
+
      
+          <div
+          v-for="message in messages" :key="message"
+            className="max-w-xl py-4 px-3 text-xs mb-4 shadow ring-gray-200 dark:ring-[#303134] dark:ring-1 dark:shadow-3xl ring-2 sm:ring-0 sm:text-base sm:shadow-none rounded-lg"
+          >
+            <div className="group">
+              <p className="text-sml line-clamp-1">
+                {{message._source.Subject}}
+              </p>
+              <a >
+                <h2 v-on:click="showMessage(message._source.Message)" className="truncate text-xl text-blue-800 dark:text-blue-400 font-medium group-hover:underline cursor-pointer">
+                  {{message._source.From}}
+                </h2>
+              </a>
+            </div>
+
+            <p className="line-clamp-2">{{message._source.To}}</p>
+          </div>
+       
+
+      
     </div>
    
     
-    <div class="modal-backdrop"  v-if="isShowModal"
+  
+   
+   
+    
+    <div class="w-full h-full bg-gray-900 bg-opacity-80 top-0 fixed sticky-0"  v-if="isShowModal"
     :title="'ModalTitle'">
-      <div class="modal">
-        <header class="modal-header">
-          <span class="modal__title">{{title}}</span>
-          <img class="btn-close" @click="close"  src="@/assets/close.svg" alt="">
-        </header>
-        <section class="modal-body">
-          <div class="input-field col s5">
-        <textarea id="textarea1" class="materialize-textarea" v-model="contentMessage" ref="update" ></textarea>
-      </div>
-        </section>
-       
-      </div>
+    <div
+	class="relative top-20 mx-auto p-5 border w-[52%] shadow-lg rounded-md bg-white"
+  v-if="isShowModal"
+>
+	<div class="mt-3 text-center">
+		<h1>{{title}}</h1>
+    <textarea id="textarea1" rows="25" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="contentMessage" ref="update" ></textarea>
+		<div class="items-center px-4 py-3">
+			<button
+				id="ok-btn"
+        @click="close" 
+				class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-black-600 focus:outline-none focus:ring-2 focus:ring-black-300"
+			>
+				Cerrar
+			</button>
+		</div>
+	</div>
+</div>
+    </div>
     </div>
     
 </template>
@@ -113,6 +115,7 @@ export default {
       this.isShowModal = false
     },
     
+    
 
    
     async searchMessages() {
@@ -121,6 +124,24 @@ export default {
         name: "PageDetails",
         params: { query: newQuery },
       });
+      try {
+        const url = "http://localhost:3000/search"
+      let options = {
+        method: 'POST',
+        headers: {
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Request-Method': 'POST, OPTIONS'
+        }, 
+        body: JSON.stringify({ input: this.keyword })
+      }
+      console.log(options)
+      const resp = fetch(url, options)
+      resp.then(res => res.json()).then(data => 
+      data.hits.hits
+      ).then( hits => hits.map((data) => this.messages.push(data)))
+      } catch (error) {
+        console.log(error);
+      }
     
       
     },
@@ -155,133 +176,13 @@ export default {
       }
     }
     
+    },
+ 
+    
     }
-    }
+    
   
   
 
 </script>
-<style>
-.formContainer__input {
-  width: 100%;
-  border-radius: 24px;
-  height: 50px;
-  padding: 0 50px;
-  border: 1px solid #dfe1ef;
-  outline: none;
-  font-size: 18px;
-}
-.formContainer__form {
-  position: relative;
-}
-.searchIcon {
-  position: absolute;
-  left: 25px;
-  top: 18px;
-  color: #9aa0ab;
-}
-.microphone {
-  position: absolute;
-  right: 25px;
-  top: 16px;
-  color: #4285f4;
-}
-.result {
-  width: 1200px;
-  margin: 35px auto;
-  display: flex;
-  align-items: center;
-}
-p{
-  cursor: pointer;
-}
-.result__img img {
-  width: 92;
-  height: 30px;
-  cursor: pointer;
-}
-.resultForm {
-  width: 600px;
-  margin-left: 20px;
-}
-.resultForm .formContainer__input {
-  width: 100% !important;
-}
-.show {
-  width: 1200px;
-  margin: 20px auto;
-  
-}
-.show__results {
-  width: 700px;
- 
-  margin-top: 20px;
-}
-.area{
-  display: flex;
-}
-.topLink {
-  color: #202124;
-  font-size: 14px;
-  margin-bottom: 6px;
-}
-.link {
-  font-size: 20px;
-  text-decoration: none;
-  color: #609;
-  margin-bottom: 10px;
-}
-.description {
-  color: #4d5156;
-  font-size: 14px;
-}
 
-
-</style>
-<style lang="scss">
-    .modal-backdrop {
-      position: fixed;
-      z-index: 999;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: rgba(0, 0, 0, 0.3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .modal {
-      position: relative;
-      padding: 30px 30px 40px 30px;
-      width: 630px;
-      z-index: 1000;
-      background: #FFFFFF;
-      display: flex;
-      flex-direction: column;
-      border-radius: 8px;
-      &__title {
-        font-weight: 600;
-        font-size: 24px;
-        display: block;
-        color: var(--black-title);
-        margin-bottom: 30px;
-      }
-      &-footer {
-        margin-top: 30px;
-        display: flex;
-        align-items: center;
-      }
-    }
-    .btn-close {
-      position: absolute;
-      height: 20px;
-      top: 17px;
-      right: 17px;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-      color: #2196F3;
-      background: transparent;
-    }
-  </style>
